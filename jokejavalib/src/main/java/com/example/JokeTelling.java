@@ -8,7 +8,7 @@ public class JokeTelling {
 
     public JokeTelling() {
         jokes = new String[4];
-        jokes[0]="1";
+        jokes[0]= "1";
         jokes[1] = "2";
         jokes[2] = "3";
         jokes[3] = "4";
