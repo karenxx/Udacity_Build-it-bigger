@@ -13,13 +13,15 @@ import android.widget.Toast;
 import com.example.JokeTelling;
 import com.example.jokeandroidlib.JokeDisplay;
 
+
 public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
+
+//        new EndpointsAsyncTask().execute();
     }
 
 
@@ -47,11 +49,24 @@ public class MainActivity extends ActionBarActivity {
 
     public void tellJoke(View view){
         //Toast.makeText(this, "derp", Toast.LENGTH_SHORT).show();
+        new EndpointsAsyncTask(new EndpointsAsyncTask.OnJokeRetrievedListener(){
+            @Override
+            public void onJokeRetrieved(String joke) {
+                Intent intent = new Intent(MainActivity.this, JokeDisplay.class);
+                joke = new JokeTelling().getRandomJoke();
+                intent.putExtra(JokeDisplay.JOKE_KEY, joke);
+                startActivity(intent);
+            }
+        }
+        ).execute();
 
-        Intent intent = new Intent(this, JokeDisplay.class);
-        JokeTelling jokeTelling = new JokeTelling();
-        String joke = jokeTelling.getRandomJoke();
-        intent.putExtra(JokeDisplay.JOKE_KEY, joke);
-        startActivity(intent);
+
+//        Intent intent = new Intent(this, JokeDisplay.class);
+//        JokeTelling jokeTelling = new JokeTelling();
+//        String joke = jokeTelling.getRandomJoke();
+//        intent.putExtra(JokeDisplay.JOKE_KEY, joke);
+//        startActivity(intent);
     }
+
+
 }
